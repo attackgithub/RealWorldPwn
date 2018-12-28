@@ -13,3 +13,6 @@ There are PoCs(analysis maybe also) I found or I collected.
 [CVE-2018-12794](https://github.com/o0xmuhe/RealWroldPwn/tree/master/CVE-2018-12794)
 
 [CVE-2018-12831](https://github.com/o0xmuhe/RealWroldPwn/tree/master/CVE-2018-12831)
+
+[CVE-2018-4990](https://github.com/o0xmuhe/RealWorldPwn/tree/master/CVE-2018-4990)
+
