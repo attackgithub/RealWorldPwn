@@ -29,3 +29,8 @@ There are PoCs(analysis maybe also) I found or I collected.
 [CVE-2018-12831](https://github.com/o0xmuhe/RealWroldPwn/tree/master/CVE-2018-12831)
 
 FoxitReader OOB Read
+
+
+### Fileformat bug hunting mind map
+
+exported from xmind
