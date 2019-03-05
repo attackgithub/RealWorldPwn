@@ -1,0 +1,67 @@
+gdb-peda$ set args crash35.pdf out.pdf crash35.pdf 
+gdb-peda$ r
+Starting program: /home/syclover/podofo/build/tools/podofoimpose/podofoimpose crash35.pdf out.pdf crash35.pdf 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+Source : crash35.pdf
+Target : out.pdf
+Plan   : crash35.pdf
+PdfTranslator::PdfTranslator
+1
+2
+<</Root 1 0 R/Size 15>>
+
+Program received signal SIGSEGV, Segmentation fault.
+
+[----------------------------------registers-----------------------------------]
+RAX: 0x9c95c0 --> 0x7ffff64f7d78 --> 0x7ffff64f7d68 --> 0x7ffff64f7d58 --> 0x7ffff64f7d48 --> 0x7ffff64f7d38 (--> ...)
+RBX: 0x7fffffffdd00 --> 0x72f6e0 --> 0x4a7640 (<PoDoFo::PdfMemoryOutputStream::~PdfMemoryOutputStream()>:	)
+RCX: 0x7ffff64f7b20 --> 0x0 
+RDX: 0x9c95c0 --> 0x7ffff64f7d78 --> 0x7ffff64f7d68 --> 0x7ffff64f7d58 --> 0x7ffff64f7d48 --> 0x7ffff64f7d38 (--> ...)
+RSI: 0x2 
+RDI: 0x150 
+RBP: 0x9baab0 --> 0x0 
+RSP: 0x7fffffffdc10 --> 0x1 
+RIP: 0x44de03 (<PoDoFo::Impose::PdfTranslator::setTarget(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+3331>:	)
+R8 : 0x7ffff64f7d78 --> 0x7ffff64f7d68 --> 0x7ffff64f7d58 --> 0x7ffff64f7d48 --> 0x7ffff64f7d38 --> 0x7ffff64f7d28 (--> ...)
+R9 : 0x0 
+R10: 0x1 
+R11: 0x7ffff62c7f90 --> 0xfffda370fffda09f 
+R12: 0x7fffffffdc28 --> 0x9b8821 --> 0x6100000000000000 ('')
+R13: 0x9af090 --> 0x9af390 --> 0x73dff0 --> 0x552ab0 (<PoDoFo::PdfMemDocument::~PdfMemDocument()>:	)
+R14: 0x0 
+R15: 0x1
+EFLAGS: 0x10206 (carry PARITY adjust zero sign trap INTERRUPT direction overflow)
+[-------------------------------------code-------------------------------------]
+   0x44ddf4 <PoDoFo::Impose::PdfTranslator::setTarget(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+3316>:	
+    mov    edi,0xb0
+   0x44ddf9 <PoDoFo::Impose::PdfTranslator::setTarget(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+3321>:	
+    call   0x438db0 <_Znwm@plt>
+   0x44ddfe <PoDoFo::Impose::PdfTranslator::setTarget(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+3326>:	
+    mov    QWORD PTR [rsp+0x68],rax
+=> 0x44de03 <PoDoFo::Impose::PdfTranslator::setTarget(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+3331>:	
+    mov    rax,QWORD PTR [r14]
+   0x44de06 <PoDoFo::Impose::PdfTranslator::setTarget(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+3334>:	
+    lea    rbx,[rsp+0x8]
+   0x44de0b <PoDoFo::Impose::PdfTranslator::setTarget(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+3339>:	
+    mov    rdi,rbx
+   0x44de0e <PoDoFo::Impose::PdfTranslator::setTarget(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+3342>:	
+    mov    rsi,r14
+   0x44de11 <PoDoFo::Impose::PdfTranslator::setTarget(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+3345>:	
+    call   QWORD PTR [rax+0x30]
+[------------------------------------stack-------------------------------------]
+0000| 0x7fffffffdc10 --> 0x1 
+0008| 0x7fffffffdc18 --> 0x72f0b8 --> 0x49a6c0 (<PoDoFo::PdfMemoryInputStream::~PdfMemoryInputStream()>:	)
+0016| 0x7fffffffdc20 --> 0x9b87d0 ("/CBG gs 0.5 0.8 0.5 rg -270 -95 540 190 re f /CBK gs q 1 0 0 1 0 0 cm /CBN Do Q \n")
+0024| 0x7fffffffdc28 --> 0x9b8821 --> 0x6100000000000000 ('')
+0032| 0x7fffffffdc30 --> 0x51 ('Q')
+0040| 0x7fffffffdc38 --> 0x70756f7247 ('Group')
+0048| 0x7fffffffdc40 --> 0x7ffff64f85c3 --> 0x4f9770000000000a 
+0056| 0x7fffffffdc48 --> 0x1 
+[------------------------------------------------------------------------------]
+Legend: code, data, rodata, value
+Stopped reason: SIGSEGV
+0x000000000044de03 in PoDoFo::Impose::PdfTranslator::setTarget (this=0x9af090, 
+Python Exception <class 'gdb.error'> There is no member named _M_dataplus.: 
+    target=) at /home/syclover/podofo/tools/podofoimpose/pdftranslator.cpp:259
+259					PdfXObject *xobj = new PdfXObject ( page->GetMediaBox(), targetDoc );

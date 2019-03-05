@@ -1,0 +1,61 @@
+gdb-peda$ set args crash5.pdf out.pdf crash5.pdf 
+gdb-peda$ r
+Starting program: /home/syclover/podofo/build/tools/podofoimpose/podofoimpose crash5.pdf out.pdf crash5.pdf 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+Source : crash5.pdf
+Target : out.pdf
+Plan   : crash5.pdf
+PdfTranslator::PdfTranslator
+1
+2
+<</Info 20 0 R/Root 19 0 R/Size 21>>
+
+Program received signal SIGSEGV, Segmentation fault.
+
+[----------------------------------registers-----------------------------------]
+RAX: 0x0 
+RBX: 0x9af410 --> 0x730630 --> 0x4d9460 (<PoDoFo::PdfVecObjects::~PdfVecObjects()>:	lea    rsp,[rsp-0x98])
+RCX: 0x600 
+RDX: 0x0 
+RSI: 0x0 
+RDI: 0x9af090 --> 0x9af390 --> 0x73dff0 --> 0x552ab0 (<PoDoFo::PdfMemDocument::~PdfMemDocument()>:	)
+RBP: 0x9af2d8 --> 0x0 
+RSP: 0x7fffffffd120 --> 0x9af090 --> 0x9af390 --> 0x73dff0 --> 0x552ab0 (<PoDoFo::PdfMemDocument::~PdfMemDocument()>:	)
+RIP: 0x449f40 (<PoDoFo::Impose::PdfTranslator::migrateResource(PoDoFo::PdfObject*)+80>:	cmp    BYTE PTR [r15+0x13],0x0)
+R8 : 0x9c29e0 --> 0x0 
+R9 : 0x0 
+R10: 0xcccccccccccccccd 
+R11: 0x7ffff62c7f90 --> 0xfffda370fffda09f 
+R12: 0x7fffffffd1f8 --> 0x5220302033 ('3 0 R')
+R13: 0x0 
+R14: 0x9c0fd0 --> 0x7fff00000000 
+R15: 0x0
+EFLAGS: 0x10202 (carry parity adjust zero sign trap INTERRUPT direction overflow)
+[-------------------------------------code-------------------------------------]
+   0x449f32 <PoDoFo::Impose::PdfTranslator::migrateResource(PoDoFo::PdfObject*)+66>:	sub    rsp,0x88
+   0x449f39 <PoDoFo::Impose::PdfTranslator::migrateResource(PoDoFo::PdfObject*)+73>:	mov    r15,rsi
+   0x449f3c <PoDoFo::Impose::PdfTranslator::migrateResource(PoDoFo::PdfObject*)+76>:	mov    QWORD PTR [rsp],rdi
+=> 0x449f40 <PoDoFo::Impose::PdfTranslator::migrateResource(PoDoFo::PdfObject*)+80>:	cmp    BYTE PTR [r15+0x13],0x0
+   0x449f45 <PoDoFo::Impose::PdfTranslator::migrateResource(PoDoFo::PdfObject*)+85>:	
+    je     0x44a55c <PoDoFo::Impose::PdfTranslator::migrateResource(PoDoFo::PdfObject*)+1644>:	    je     0x44a55c <PoDoFo::Impose::PdfTranslator::migrateResource(PoDoFo::PdfObject*)+1644>
+   0x449f4b <PoDoFo::Impose::PdfTranslator::migrateResource(PoDoFo::PdfObject*)+91>:	nop
+   0x449f4c <PoDoFo::Impose::PdfTranslator::migrateResource(PoDoFo::PdfObject*)+92>:	lea    rsp,[rsp-0x98]
+   0x449f54 <PoDoFo::Impose::PdfTranslator::migrateResource(PoDoFo::PdfObject*)+100>:	mov    QWORD PTR [rsp],rdx
+[------------------------------------stack-------------------------------------]
+0000| 0x7fffffffd120 --> 0x9af090 --> 0x9af390 --> 0x73dff0 --> 0x552ab0 (<PoDoFo::PdfMemDocument::~PdfMemDocument()>:	)
+0008| 0x7fffffffd128 --> 0x7ffff61b753c (<__GI___libc_free+76>:	add    rsp,0x28)
+0016| 0x7fffffffd130 --> 0x9c29e0 --> 0x0 
+0024| 0x7fffffffd138 --> 0x449f12 (<PoDoFo::Impose::PdfTranslator::migrateResource(PoDoFo::PdfObject*)+34>:	mov    rax,QWORD PTR [rsp+0x10])
+0032| 0x7fffffffd140 --> 0x0 
+0040| 0x7fffffffd148 --> 0x600 
+0048| 0x7fffffffd150 --> 0x0 
+0056| 0x7fffffffd158 --> 0x7fffffffd190 --> 0x7304d0 --> 0x4d3cc0 (<PoDoFo::PdfVariant::~PdfVariant()>:	lea    rsp,[rsp-0x98])
+[------------------------------------------------------------------------------]
+Legend: code, data, rodata, value
+Stopped reason: SIGSEGV
+PoDoFo::Impose::PdfTranslator::migrateResource (this=0x9af090, obj=0x0)
+    at /home/syclover/podofo/tools/podofoimpose/pdftranslator.cpp:175
+175				if ( obj->IsDictionary() )
+gdb-peda$ 
+

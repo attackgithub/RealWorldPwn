@@ -1,0 +1,80 @@
+syclover@ubuntu:~/podofo/build/out/crashes/muhe$ gdb ../../../tools/podofoimpose/podofoimpose 
+GNU gdb (Ubuntu 7.11.1-0ubuntu1~16.5) 7.11.1
+Copyright (C) 2016 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from ../../../tools/podofoimpose/podofoimpose...done.
+gdb-peda$ set args crash1.pdf  out.pdf crash1.pdf 
+gdb-peda$ r
+Starting program: /home/syclover/podofo/build/tools/podofoimpose/podofoimpose crash1.pdf  out.pdf crash1.pdf 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+Source : crash1.pdf
+Target : out.pdf
+Plan   : crash1.pdf
+PdfTranslator::PdfTranslator
+1
+2
+
+Program received signal SIGSEGV, Segmentation fault.
+
+[----------------------------------registers-----------------------------------]
+RAX: 0x991ae0 --> 0x7ffff6d95988 --> 0x7ffff6b29b70 (<_ZNSoD1Ev>:	)
+RBX: 0x0 
+RCX: 0x0 
+RDX: 0x0 
+RSI: 0x7ffff64f9770 --> 0x0 
+RDI: 0x0 
+RBP: 0x7ffff6d9c1c0 --> 0x7ffff6d918d0 --> 0x7ffff6acfdd0 (<_ZNSt5ctypeIcED2Ev>:)
+RSP: 0x7fffffffdac8 --> 0x448ee1 (     <PoDoFo::Impose::PdfTranslator::setSource(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+5681>:	)
+RIP: 0x4f0f48 (<PoDoFo::PdfDocument::GetPageCount() const+56>:	)
+R8 : 0x7ffff64f9770 --> 0x0 
+R9 : 0x7ffff7fd6740 (0x00007ffff7fd6740)
+R10: 0x1 
+R11: 0x246 
+R12: 0x7fffffffdae8 --> 0x7ffff7000002 (MemError)
+R13: 0x9af090 --> 0x0 
+R14: 0x9b15a0 --> 0x2 
+R15: 0x7fffffffdb08 ("crash1.pdf")
+EFLAGS: 0x10246 (carry PARITY adjust ZERO sign trap INTERRUPT direction overflow)
+[-------------------------------------code-------------------------------------]
+   0x4f0f37 <PoDoFo::PdfDocument::GetPageCount() const+39>:	
+    mov    rcx,QWORD PTR [rsp+0x8]
+   0x4f0f3c <PoDoFo::PdfDocument::GetPageCount() const+44>:	
+    mov    rdx,QWORD PTR [rsp]
+   0x4f0f40 <PoDoFo::PdfDocument::GetPageCount() const+48>:	
+    lea    rsp,[rsp+0x98]
+=> 0x4f0f48 <PoDoFo::PdfDocument::GetPageCount() const+56>:	
+    mov    rdi,QWORD PTR [rdi+0x70]
+   0x4f0f4c <PoDoFo::PdfDocument::GetPageCount() const+60>:	jmp    0x5996c0
+     <PoDoFo::PdfPagesTree::GetTotalNumberOfPages() const>
+   0x4f0f51:	nop    DWORD PTR [rax+rax*1+0x0]
+   0x4f0f56:	nop    WORD PTR cs:[rax+rax*1+0x0]
+   0x4f0f60 <PoDoFo::PdfDocument::GetPage(int) const>:	lea    rsp,[rsp-0x98]
+[------------------------------------stack-------------------------------------]
+0000| 0x7fffffffdac8 --> 0x448ee1 (     <PoDoFo::Impose::PdfTranslator::setSource(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+5681>:	)
+0008| 0x7fffffffdad0 --> 0x2 
+0016| 0x7fffffffdad8 --> 0x7fffffffdae8 --> 0x7ffff7000002 (MemError)
+0024| 0x7fffffffdae0 --> 0x2 
+0032| 0x7fffffffdae8 --> 0x7ffff7000002 (MemError)
+0040| 0x7fffffffdaf0 --> 0x1 
+0048| 0x7fffffffdaf8 --> 0x7fffffffdb08 ("crash1.pdf")
+0056| 0x7fffffffdb00 --> 0xa ('\n')
+[------------------------------------------------------------------------------]
+Legend: code, data, rodata, value
+Stopped reason: SIGSEGV
+0x00000000004f0f48 in PoDoFo::PdfDocument::GetPageCount (this=0x0)
+    at /home/syclover/podofo/src/doc/PdfDocument.cpp:179
+179	    return m_pPagesTree->GetTotalNumberOfPages();
+gdb-peda$ 
+

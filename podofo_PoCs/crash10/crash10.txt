@@ -1,0 +1,126 @@
+gdb-peda$ set args crash10.pdf out.pdf crash10.pdf 
+gdb-peda$ r
+Starting program: /home/syclover/podofo/build/tools/podofoimpose/podofoimpose crash10.pdf out.pdf crash10.pdf 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+Source : crash10.pdf
+Target : out.pdf
+Plan   : crash10.pdf
+PdfTranslator::PdfTranslator
+1
+2
+<</Info 20 0 R/Root 19 0 R/Size 21>>
+
+Program received signal SIGSEGV, Segmentation fault.
+
+[----------------------------------registers-----------------------------------]
+RAX: 0x20 (' ')
+RBX: 0x7ffff64f7b20 --> 0x1 
+RCX: 0x0 
+RDX: 0x1e 
+RSI: 0x201 
+RDI: 0x7ffff64f7b20 --> 0x1 
+RBP: 0x210 
+RSP: 0x7fffff7fef70 
+RIP: 0x7ffff61b4bbc (<_int_malloc+60>:	mov    QWORD PTR [rsp+0x8],rsi)
+R8 : 0x7fffff7ff177 --> 0x7ffff6d9c15030 
+R9 : 0x7fffff7ff177 --> 0x7ffff6d9c15030 
+R10: 0xcccccccccccccccd 
+R11: 0x1002 
+R12: 0x7fffff7ff0c0 --> 0x0 
+R13: 0x30 ('0')
+R14: 0x7fffff7ff177 --> 0x7ffff6d9c15030 
+R15: 0x7ffff6d9b900 --> 0x7ffff6d91218 --> 0x7ffff6ac6e60 (<_ZNSt16__numpunct_cacheIcED2Ev>:	)
+EFLAGS: 0x10202 (carry parity adjust zero sign trap INTERRUPT direction overflow)
+[-------------------------------------code-------------------------------------]
+   0x7ffff61b4bb0 <_int_malloc+48>:	mov    eax,0x20
+   0x7ffff61b4bb5 <_int_malloc+53>:	cmovb  rbp,rax
+   0x7ffff61b4bb9 <_int_malloc+57>:	test   rdi,rdi
+=> 0x7ffff61b4bbc <_int_malloc+60>:	mov    QWORD PTR [rsp+0x8],rsi
+   0x7ffff61b4bc1 <_int_malloc+65>:	
+    je     0x7ffff61b5425 <_int_malloc+2213>
+   0x7ffff61b4bc7 <_int_malloc+71>:	
+    cmp    rbp,QWORD PTR [rip+0x344c2a]        # 0x7ffff64f97f8 <global_max_fast>
+   0x7ffff61b4bce <_int_malloc+78>:	ja     0x7ffff61b4c40 <_int_malloc+192>
+   0x7ffff61b4bd0 <_int_malloc+80>:	mov    edi,ebp
+[------------------------------------stack-------------------------------------]
+Invalid $SP address: 0x7fffff7fef70
+[------------------------------------------------------------------------------]
+Legend: code, data, rodata, value
+Stopped reason: SIGSEGV
+0x00007ffff61b4bbc in _int_malloc (av=av@entry=0x7ffff64f7b20 <main_arena>, 
+    bytes=bytes@entry=0x201) at malloc.c:3353
+3353	malloc.c: No such file or directory.
+gdb-peda$ 
+gdb-peda$ bt 10
+#0  0x00007ffff61b4bbc in _int_malloc (
+    av=av@entry=0x7ffff64f7b20 <main_arena>, bytes=bytes@entry=0x201)
+    at malloc.c:3353
+#1  0x00007ffff61b7184 in __GI___libc_malloc (bytes=0x201) at malloc.c:2913
+#2  0x00007ffff6aa9e78 in operator new(unsigned long) ()
+   from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#3  0x00007ffff6b3b87d in std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::reserve(unsigned long) ()
+   from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#4  0x00007ffff6b2fcd5 in std::__cxx11::basic_stringbuf<char, std::char_traits<char>, std::allocator<char> >::overflow(int) ()
+   from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#5  0x00007ffff6b39e79 in std::basic_streambuf<char, std::char_traits<char> >::xsputn(char const*, long) () from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#6  0x00007ffff6b1f214 in std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_int<unsigned long>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, unsigned long) const ()
+   from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#7  0x00007ffff6b1f36d in std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, unsigned long) const ()
+   from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#8  0x00007ffff6b2b69a in std::ostream& std::ostream::_M_insert<unsigned long>(unsigned long) () from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#9  0x00000000004adfe8 in std::ostream::operator<< (
+    this=0x7ffff6d95ca8 <vtable for std::__cxx11::basic_ostringstream<char, std::char_traits<char>, std::allocator<char> >+24>, __n=<optimized out>)
+    at /usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/ostream:196
+(More stack frames follow...)
+gdb-peda$ bt 20
+#0  0x00007ffff61b4bbc in _int_malloc (
+    av=av@entry=0x7ffff64f7b20 <main_arena>, bytes=bytes@entry=0x201)
+    at malloc.c:3353
+#1  0x00007ffff61b7184 in __GI___libc_malloc (bytes=0x201) at malloc.c:2913
+#2  0x00007ffff6aa9e78 in operator new(unsigned long) ()
+   from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#3  0x00007ffff6b3b87d in std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::reserve(unsigned long) ()
+   from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#4  0x00007ffff6b2fcd5 in std::__cxx11::basic_stringbuf<char, std::char_traits<char>, std::allocator<char> >::overflow(int) ()
+   from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#5  0x00007ffff6b39e79 in std::basic_streambuf<char, std::char_traits<char> >::xsputn(char const*, long) () from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#6  0x00007ffff6b1f214 in std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_int<unsigned long>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, unsigned long) const ()
+   from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#7  0x00007ffff6b1f36d in std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, unsigned long) const ()
+   from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#8  0x00007ffff6b2b69a in std::ostream& std::ostream::_M_insert<unsigned long>(unsigned long) () from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#9  0x00000000004adfe8 in std::ostream::operator<< (
+    this=0x7ffff6d95ca8 <vtable for std::__cxx11::basic_ostringstream<char, std::char_traits<char>, std::allocator<char> >+24>, __n=<optimized out>)
+    at /usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/ostream:196
+#10 PoDoFo::PdfReference::ToString[abi:cxx11]() const (this=0x5d84988)
+    at /home/syclover/podofo/src/base/PdfReference.cpp:59
+#11 0x000000000044b691 in PoDoFo::Impose::PdfTranslator::migrateResource (
+    this=0x9af0f0, obj=<optimized out>)
+    at /home/syclover/podofo/tools/podofoimpose/pdftranslator.cpp:220
+#12 0x000000000044a72c in PoDoFo::Impose::PdfTranslator::migrateResource (
+    this=0x9af0f0, obj=0x9c3610)
+    at /home/syclover/podofo/tools/podofoimpose/pdftranslator.cpp:197
+#13 0x000000000044a548 in PoDoFo::Impose::PdfTranslator::migrateResource (
+    this=0x9af0f0, obj=0x9b56a0)
+    at /home/syclover/podofo/tools/podofoimpose/pdftranslator.cpp:183
+#14 0x000000000044b46c in PoDoFo::Impose::PdfTranslator::migrateResource (
+    this=0x9af0f0, obj=0x9c1770)
+    at /home/syclover/podofo/tools/podofoimpose/pdftranslator.cpp:209
+#15 0x000000000044a548 in PoDoFo::Impose::PdfTranslator::migrateResource (
+    this=0x9af0f0, obj=0x9b5f60)
+    at /home/syclover/podofo/tools/podofoimpose/pdftranslator.cpp:183
+#16 0x000000000044b46c in PoDoFo::Impose::PdfTranslator::migrateResource (
+    this=0x9af0f0, obj=0x9c37e0)
+    at /home/syclover/podofo/tools/podofoimpose/pdftranslator.cpp:209
+#17 0x000000000044a548 in PoDoFo::Impose::PdfTranslator::migrateResource (
+    this=0x9af0f0, obj=0x9b56a0)
+    at /home/syclover/podofo/tools/podofoimpose/pdftranslator.cpp:183
+#18 0x000000000044b46c in PoDoFo::Impose::PdfTranslator::migrateResource (
+    this=0x9af0f0, obj=0x9c1770)
+    at /home/syclover/podofo/tools/podofoimpose/pdftranslator.cpp:209
+#19 0x000000000044a548 in PoDoFo::Impose::PdfTranslator::migrateResource (
+    this=0x9af0f0, obj=0x9b5f60)
+    at /home/syclover/podofo/tools/podofoimpose/pdftranslator.cpp:183
+(More stack frames follow...)
+gdb-peda$

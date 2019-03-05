@@ -1,0 +1,68 @@
+gdb-peda$ set args crash23.pdf out.pdf crash23.pdf 
+gdb-peda$ r
+Starting program: /home/syclover/podofo/build/tools/podofoimpose/podofoimpose crash23.pdf out.pdf crash23.pdf 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+Source : crash23.pdf
+Target : out.pdf
+Plan   : crash23.pdf
+PdfTranslator::PdfTranslator
+1
+2
+<</Info 20 0 R/Root 19 0 R/Size 21>>
+CRITICAL: Requesting page index 0. Invalid datatype in kids array: Number
+
+Program received signal SIGSEGV, Segmentation fault.
+
+[----------------------------------registers-----------------------------------]
+RAX: 0x0 
+RBX: 0x9af360 --> 0x9af370 ("crash23.pdf")
+RCX: 0x7ffff622a200 (<__openat_2+16>:	cmp    eax,0x410000)
+RDX: 0x9b1610 --> 0x9ba340 --> 0x7ffff64f7b78 --> 0x9bb880 --> 0x9ba878 --> 0x9babb0 (--> ...)
+RSI: 0x7ffff64f7b40 --> 0x9b0400 ("s [17 0 Q")
+RDI: 0xffffffff 
+RBP: 0x9af380 --> 0x0 
+RSP: 0x7fffffffdad0 --> 0x7fffffffdc28 --> 0x7ffff61abbff (<_IO_new_file_write+143>:	test   rax,rax)
+RIP: 0x448f33 (<PoDoFo::Impose::PdfTranslator::setSource(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+5763>:	)
+R8 : 0x9b0410 --> 0x9b1610 --> 0x9ba340 --> 0x7ffff64f7b78 --> 0x9bb880 --> 0x9ba878 (--> ...)
+R9 : 0x0 
+R10: 0x6 
+R11: 0x246 
+R12: 0x443720 (<_start>:	xor    ebp,ebp)
+R13: 0x9af090 --> 0x9af390 --> 0x73dff0 --> 0x552ab0 (<PoDoFo::PdfMemDocument::~PdfMemDocument()>:	)
+R14: 0x7fffffffdb20 --> 0xb ('\x0b')
+R15: 0x9af390 --> 0x73dff0 --> 0x552ab0 (<PoDoFo::PdfMemDocument::~PdfMemDocument()>:	)
+EFLAGS: 0x10202 (carry parity adjust zero sign trap INTERRUPT direction overflow)
+[-------------------------------------code-------------------------------------]
+   0x448f28 <PoDoFo::Impose::PdfTranslator::setSource(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+5752>:	
+    mov    rdi,QWORD PTR [r13+0x0]
+   0x448f2c <PoDoFo::Impose::PdfTranslator::setSource(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+5756>:	
+    xor    esi,esi
+   0x448f2e <PoDoFo::Impose::PdfTranslator::setSource(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+5758>:	
+    call   0x4f0f60 <PoDoFo::PdfDocument::GetPage(int) const>:	    call   0x4f0f60 <PoDoFo::PdfDocument::GetPage(int) const>
+=> 0x448f33 <PoDoFo::Impose::PdfTranslator::setSource(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+5763>:	
+    mov    rcx,QWORD PTR [rax]
+   0x448f36 <PoDoFo::Impose::PdfTranslator::setSource(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+5766>:	
+    lea    rdi,[rsp+0x50]
+   0x448f3b <PoDoFo::Impose::PdfTranslator::setSource(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+5771>:	
+    mov    rsi,rax
+   0x448f3e <PoDoFo::Impose::PdfTranslator::setSource(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+5774>:	
+    call   QWORD PTR [rcx+0x30]
+   0x448f41 <PoDoFo::Impose::PdfTranslator::setSource(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+5777>:	
+    movapd xmm0,XMMWORD PTR [rsp+0x60]
+[------------------------------------stack-------------------------------------]
+0000| 0x7fffffffdad0 --> 0x7fffffffdc28 --> 0x7ffff61abbff (<_IO_new_file_write+143>:	test   rax,rax)
+0008| 0x7fffffffdad8 --> 0x7ffff7de1b1f (<_dl_lookup_symbol_x+335>:	add    rsp,0x30)
+0016| 0x7fffffffdae0 --> 0x8 
+0024| 0x7fffffffdae8 --> 0x7ffff7fda6c0 --> 0x435e29 ("GLIBCXX_3.4")
+0032| 0x7fffffffdaf0 --> 0x1 
+0040| 0x7fffffffdaf8 --> 0x7fffffffdb08 ("crash23.pdf")
+0048| 0x7fffffffdb00 --> 0xb ('\x0b')
+0056| 0x7fffffffdb08 ("crash23.pdf")
+[------------------------------------------------------------------------------]
+Legend: code, data, rodata, value
+Stopped reason: SIGSEGV
+0x0000000000448f33 in PoDoFo::Impose::PdfTranslator::setSource (this=0x9af090, 
+    source=...)
+    at /home/syclover/podofo/tools/podofoimpose/pdftranslator.cpp:151
+151					PoDoFo::PdfRect rect ( sourceDoc->GetPage ( 0 )->GetMediaBox() );
